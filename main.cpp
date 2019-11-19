@@ -93,10 +93,15 @@ int main(int argc, char**argv)
     list2[0] = new sphere(vec3(-R, 0, -1), R, new lambertian(vec3(0, 0, 1)) );
     list2[1] = new sphere(vec3(R, 0, -1), R, new lambertian(vec3(1, 0, 0)));    
 
-    hitable* world = new hitable_list(list, 5);
-    //hitable *world = random_scene();
+    // hitable* world = new hitable_list(list, 5);
+    hitable *world = random_scene();
 
-    camera cam(vec3(-2, 2, 1), vec3(0, 0, -1), vec3(0, 1, 0), 45, float(nx) / float(ny));
+    vec3 lookfrom(13, 2, 3);
+    vec3 lookat(0, 0, 0);
+    float dist_to_focus = (lookfrom - lookat).length();
+    float aperture = 0.1;
+
+    camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, float(nx) / float(ny), aperture, dist_to_focus);
 
     for (int j = ny - 1; j >= 0; --j) {
         for (int i = 0; i < nx; ++i) {
