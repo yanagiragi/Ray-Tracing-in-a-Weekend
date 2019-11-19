@@ -56,7 +56,8 @@ hitable *random_scene() {
                         center, 0.2,
                         new metal(vec3(0.5*(1 + random_double()),
                                        0.5*(1 + random_double()),
-                                       0.5*(1 + random_double()))
+                                       0.5*(1 + random_double())), 
+                                       0.5*random_double()
                                   )
                     );
                 }
@@ -69,7 +70,7 @@ hitable *random_scene() {
 
     list[i++] = new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5));
     list[i++] = new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1)));
-    list[i++] = new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5)));
+    list[i++] = new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5), 0.0));
 
     return new hitable_list(list,i);
 }
@@ -84,7 +85,7 @@ int main(int argc, char**argv)
     hitable *list[5];
     list[0] = new sphere(vec3(0, 0, -1), 0.5, new lambertian(vec3(0.1, 0.2, 0.5)) );
     list[1] = new sphere(vec3(0, -100.5, -1), 100, new lambertian(vec3(0.8, 0.8, 0.0))) ;
-    list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.8, 0.6, 0.2)));
+    list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.8, 0.6, 0.2), 0.0));
     list[3] = new sphere(vec3(-1, 0, -1), 0.5, new dielectric(1.5));
     list[4] = new sphere(vec3(-1, 0, -1), -0.45, new dielectric(1.5));
 
@@ -93,10 +94,11 @@ int main(int argc, char**argv)
     list2[0] = new sphere(vec3(-R, 0, -1), R, new lambertian(vec3(0, 0, 1)) );
     list2[1] = new sphere(vec3(R, 0, -1), R, new lambertian(vec3(1, 0, 0)));    
 
-    // hitable* world = new hitable_list(list, 5);
+    //hitable* world = new hitable_list(list, 5);
     hitable *world = random_scene();
 
-    vec3 lookfrom(13, 2, 3);
+    //vec3 lookfrom(13, 2, 3);
+    vec3 lookfrom(1, 2, 3);
     vec3 lookat(0, 0, 0);
     float dist_to_focus = (lookfrom - lookat).length();
     float aperture = 0.1;
